@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D playerRB;
     Collider2D playerCol;
     Collider2D Ground;
+    GameManager gameManager;
 
     void Start()
     {
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
         playerRB = GetComponent<Rigidbody2D>();
         playerCol = GetComponent<Collider2D>();
         Ground = FindObjectOfType<CompositeCollider2D>();
+        gameManager = GameManager.Get();
     }
 
     void Update()
@@ -83,6 +85,6 @@ public class PlayerController : MonoBehaviour
     public void AddGemCollected()
     {
         gemsCollected += 1;
+        gameManager.AddScore(20);
     }
 }
-
