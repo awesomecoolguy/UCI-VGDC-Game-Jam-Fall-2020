@@ -40,6 +40,10 @@ public class PlayerHealth : Health
 
     public override void OnDamaged()
     {
+<<<<<<< Updated upstream
+=======
+        base.OnDamaged();
+>>>>>>> Stashed changes
         StartCoroutine(BecomeInvulnerable());
     }
 
