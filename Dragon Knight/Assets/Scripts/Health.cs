@@ -4,6 +4,7 @@ public abstract class Health : MonoBehaviour
 {
     public int maxHealth = 3;
     protected int currentHealth;
+    public bool damageable = true;
 
     private void Awake()
     {
@@ -28,13 +29,22 @@ public abstract class Health : MonoBehaviour
     /// <param name="amount">Damage amount. Default to 1.</param>
     public void Damage(int amount = 1)
     {
+        if (!damageable)
+            return;
+
         currentHealth -= amount;
         if (currentHealth < 0)
             currentHealth = 0;
+        OnDamaged();
         OnHealthChanged();
         if (currentHealth == 0)
             OnDie();
     }
+
+    /// <summary>
+    /// Triggers when the target is damaged.
+    /// </summary>
+    public virtual void OnDamaged() {}
 
     /// <summary>
     /// Triggers when the health amount changes.
