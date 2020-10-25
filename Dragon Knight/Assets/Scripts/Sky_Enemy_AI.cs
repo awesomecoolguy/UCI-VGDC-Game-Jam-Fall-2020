@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Reflection;
 using System.Security.Cryptography;
 using UnityEngine;
@@ -74,10 +76,10 @@ public class Sky_Enemy_AI : MonoBehaviour
                 Reloaded = false;
                 StartCoroutine("Reloading");
                 first_shot = false;
-                RaycastHit hit;
-                if (Physics.Raycast(transform.position, direction, out hit, Mathf.Infinity))
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(direction.x, direction.y), Mathf.Infinity);
+                foreach(Collider2D collider in player.GetComponents<Collider2D>())
                 {
-                    if (hit.point == player.transform.position)
+                    if (hit.collider == collider)
                     {
                         player.GetComponent<Health>().Damage();
                     }
@@ -94,10 +96,10 @@ public class Sky_Enemy_AI : MonoBehaviour
                 //attack sound
                 Reloaded = false;
                 StartCoroutine("Reloading");
-                RaycastHit hit;
-                if (Physics.Raycast(transform.position, direction, out hit, Mathf.Infinity))
+                RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(direction.x, direction.y), Mathf.Infinity);
+                foreach (Collider2D collider in player.GetComponents<Collider2D>())
                 {
-                    if (hit.point == player.transform.position)
+                    if (hit.collider == collider)
                     {
                         player.GetComponent<Health>().Damage();
                     }

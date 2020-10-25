@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     public bool onGround = true;
     private int gemsCollected = 0;
     
+    
     public bool canFlame;
     private float maxFlameAmmo = 6f;
     private float m_CurrentFlameAmmo;
@@ -69,14 +70,14 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void FixedUpdate()
+    void Update()
     {
         HorizontalMovement();
         PlayerJump();
         DetermineOnGround();
         if (currentFlameAmmo <= 0)
         {
-            Debug.Log("hi");
+            
             StartCoroutine(reloadFlame());
             return;
         }
@@ -139,7 +140,9 @@ public class PlayerController : MonoBehaviour
     private void PlayerJump()
     {
         if (Input.GetKeyDown(KeyCode.Space) && onGround == true)
+
         {
+            Debug.Log("hi");
             playerRB.velocity += new Vector2(0f, jumpVelocity);
         }
     }
