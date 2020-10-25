@@ -45,4 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startMenuScene: StartMenu
   gameUI: {fileID: 6678607251823689276, guid: 419ed5a09a904674eb197701467ce65d, type: 3}
-  gameMenu: {fileID: 3990482326589025106, guid: 7114f94ad34dd394aa4068eb3082386a, type: 3}
+  gameMenu: {fileID: 3990482326589025106, guid: 7114f94ad34dd394aa4068eb3082386a,
+    type: 3}
