@@ -16,6 +16,9 @@ public class GameUI : MonoBehaviour
     public Text scoreText;
     public int scoreWidth = 6;
 
+    [Header("Flame Gauge")]
+    public Slider flameGauge;
+
     private GameManager gameManager;
 
     /// <summary>
@@ -62,5 +65,14 @@ public class GameUI : MonoBehaviour
     public void SetScore(int newScore)
     {
         scoreText.text = newScore.ToString().PadLeft(scoreWidth, '0');
+    }
+
+    /// <summary>
+    /// Sets the flame gauge in the UI.
+    /// </summary>
+    /// <param name="newAmount">New flame gauge amount.</param>
+    public void SetFlameGauge(int newAmount)
+    {
+        flameGauge.value = newAmount;
     }
 }

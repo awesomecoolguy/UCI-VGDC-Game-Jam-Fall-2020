@@ -95,6 +95,15 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Sets the flame gauge amount in the UI.
+    /// </summary>
+    /// <param name="amount">Current flame gauge amount.</param>
+    public void SetFlameGauge(int amount)
+    {
+        gameUiInstance.SetHealth(amount);
+    }
+
+    /// <summary>
     /// Pauses the game.
     /// </summary>
     public void PauseGame()

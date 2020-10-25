@@ -60,8 +60,24 @@ public class PlayerController : MonoBehaviour
 
     private void HorizontalMovement()
     {
-       
-        if (Input.GetKey(KeyCode.D))
+        if (isFlaming)
+        {
+            if (Input.GetKey(KeyCode.D))
+            {
+                FlipPlayer(1);
+                playerRB.velocity = new Vector2(movementSpeed, 0f);
+            }
+            else if (Input.GetKey(KeyCode.A))
+            {
+                FlipPlayer(-1);
+                playerRB.velocity = new Vector2(-movementSpeed, 0f);
+            }
+            else
+            {
+                playerRB.velocity = new Vector2(0f, 0);
+            }
+        }
+        else if (Input.GetKey(KeyCode.D))
         {
             FlipPlayer(1);
             playerRB.velocity = new Vector2(movementSpeed, playerRB.velocity.y);
@@ -122,6 +138,7 @@ public class PlayerController : MonoBehaviour
                 isFlaming = true;
                 nextTimeToFlame = Time.time + 1f / flameRate;
                 currentFlameAmmo--;
+                gameManager.SetFlameGauge((int)currentFlameAmmo);
             }
 
             if(canFlame == false)
@@ -129,11 +146,12 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("No Flame");
 
                 
-            }
-
-      
+            }   
             
-            
+        }
+        else
+        {
+            isFlaming = false;
         }
 
 
@@ -149,6 +167,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("realoding");
             yield return new WaitForSeconds(flameCooldown);
             currentFlameAmmo = maxFlameAmmo;
+            gameManager.SetFlameGauge((int)currentFlameAmmo);
             canFlame = true;
  
           
