@@ -7,12 +7,9 @@ public abstract class Health : MonoBehaviour
     public int maxHealth = 3;
     protected int currentHealth;
     public bool damageable = true;
-<<<<<<< Updated upstream
-=======
     public List<AudioClip> damagedSounds;
 
     private System.Random rng = new System.Random();
->>>>>>> Stashed changes
 
     private void Awake()
     {
@@ -52,9 +49,6 @@ public abstract class Health : MonoBehaviour
     /// <summary>
     /// Triggers when the target is damaged.
     /// </summary>
-<<<<<<< Updated upstream
-    public virtual void OnDamaged() {}
-=======
     public virtual void OnDamaged()
     {
         if (damagedSounds.Count > 0)
@@ -63,7 +57,6 @@ public abstract class Health : MonoBehaviour
             AudioSource.PlayClipAtPoint(damagedSounds[index], transform.position);
         }
     }
->>>>>>> Stashed changes
 
     /// <summary>
     /// Triggers when the health amount changes.

@@ -9,7 +9,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float movementSpeed = 2f;
     [SerializeField] private float jumpVelocity = 4f;
 
+    [Header("FlameBreathParameters")]
+    [SerializeField] GameObject flameBreath;
+    [SerializeField] float flameEmmisionRate;
 
+    private ParticleSystem flameBreathPS;
     public float flameDamage;
     public float flameCooldown;
 
@@ -34,6 +38,7 @@ public class PlayerController : MonoBehaviour
         playerCol = GetComponent<Collider2D>();
         Ground = FindObjectOfType<CompositeCollider2D>();
         gameManager = GameManager.Get();
+        flameBreathPS = flameBreath.GetComponent<ParticleSystem>();
     }
 
     void Update()
@@ -41,8 +46,7 @@ public class PlayerController : MonoBehaviour
         HorizontalMovement();
         PlayerJump();
         DetermineOnGround();
-        Flame();
-
+        TriggerFire();
     }
 
     private void HorizontalMovement()
@@ -98,9 +102,23 @@ public class PlayerController : MonoBehaviour
         gameManager.AddScore(20);
     }
 
+    private void TriggerFire()
+    {
+        if(Input.GetKey(KeyCode.E))
+        {
+            flameBreathPS.Play();
+        }
+        else
+        {
+            flameBreathPS.Pause();
+            flameBreathPS.Clear();
+        }
+    }
+
+/*
     private void Flame()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             if (Time.time >= (lastFlame - flameCooldown)) // checks if flame is off cooldown
             {
@@ -112,8 +130,6 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
-
 
     private void checkFlame()
     {
@@ -135,5 +151,6 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+    */
 
 }
