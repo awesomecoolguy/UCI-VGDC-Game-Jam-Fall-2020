@@ -27,6 +27,7 @@ public class Sky_Enemy_AI : MonoBehaviour
     public GameObject projectile;
     public int Reloading_time;
     private bool first_shot = true;
+    private GameObject projectile_clone;
 
     // Start is called before the first frame update
     void Start()
@@ -56,27 +57,45 @@ public class Sky_Enemy_AI : MonoBehaviour
         }
         if (aware)
         {
+            var direction = player.transform.position - transform.position;
+            direction.Normalize();
+            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.AngleAxis(Mathf.Clamp(-(angle + 60),-60,60), Vector3.forward);
             if (first_shot)
             {
-                Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), GetComponent<Collider2D>());
+                foreach (Collider2D collider in GetComponents<Collider2D>())
+                {
+                    Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), collider);
+                }
                 projectile.SetActive(true);
                 projectile.transform.position = transform.position;
                 //attack sound
-                projectile.GetComponent<Rigidbody2D>().velocity = transform.forward * projectile_speed;
+                projectile.GetComponent<Rigidbody2D>().velocity = new Vector2(direction.x, direction.y) * projectile_speed;
                 Reloaded = false;
                 StartCoroutine("Reloading");
                 first_shot = false;
+                RaycastHit hit;
+                if (Physics.Raycast(transform.position, direction, out hit, Mathf.Infinity))
+                {
+                    if (hit.point == player.transform.position)
+                    {
+                        player.GetComponent<Health>().Damage();
+                    }
+                }
             }
             if (Reloaded && !first_shot)
             {
-                Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-                GameObject projectile_clone = Instantiate(projectile, transform.position, transform.rotation) as GameObject;
-                projectile_clone.GetComponent<Rigidbody2D>().velocity = transform.forward * projectile_speed;
+                foreach (Collider2D collider in GetComponents<Collider2D>())
+                {
+                    Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), collider);
+                }
+                projectile_clone = Instantiate(projectile, transform.position, transform.rotation) as GameObject;
+                projectile_clone.GetComponent<Rigidbody2D>().velocity = new Vector2(direction.x, direction.y) * projectile_speed;
                 //attack sound
                 Reloaded = false;
                 StartCoroutine("Reloading");
                 RaycastHit hit;
-                if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity))
+                if (Physics.Raycast(transform.position, direction, out hit, Mathf.Infinity))
                 {
                     if (hit.point == player.transform.position)
                     {
@@ -86,9 +105,6 @@ public class Sky_Enemy_AI : MonoBehaviour
             }
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, transform.position.y), speed * Time.deltaTime);
             //move attack animation
-            var direction = player.transform.position - transform.position;
-            var angle = Mathf.Atan2(direction.y,direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
         if (!aware)
         {

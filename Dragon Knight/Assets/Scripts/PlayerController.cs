@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,11 +19,11 @@ public class PlayerController : MonoBehaviour
     
     public bool isFlaming = false;
 
-    private bool onGround = true;
+    public bool onGround = true;
     private int gemsCollected = 0;
     
-    private bool canFlame;
-    private float maxFlameAmmo = 10f;
+    public bool canFlame;
+    private float maxFlameAmmo = 6f;
     private float m_CurrentFlameAmmo;
     private float currentFlameAmmo
     {
@@ -39,8 +40,8 @@ public class PlayerController : MonoBehaviour
     }
     private float nextTimeToFlame = 0f;
     private float flameRate = 2f;
-    private float flameCooldown = 10f;
-    private bool isRealoading = false;
+    private int flameCooldown = 3;
+    public bool isRealoading = false;
 
     //Cached references
     Animator playerAnim;
@@ -54,7 +55,7 @@ public class PlayerController : MonoBehaviour
         playerAnim = GetComponent<Animator>();
         playerRB = GetComponent<Rigidbody2D>();
         playerCol = GetComponent<Collider2D>();
-        Ground = FindObjectOfType<CompositeCollider2D>();
+        Ground = FindObjectOfType<TilemapCollider2D>();
         gameManager = GameManager.Get();
         gameManager.SetFlameGaugeMax((int)maxFlameAmmo);
         flameBreathPS = flameBreath.GetComponent<ParticleSystem>();
@@ -62,13 +63,20 @@ public class PlayerController : MonoBehaviour
         canFlame = true;
     }
 
-    void Update()
+    private void OnEnable()
+    {
+        isRealoading = false;
+
+    }
+
+    void FixedUpdate()
     {
         HorizontalMovement();
         PlayerJump();
         DetermineOnGround();
         if (currentFlameAmmo <= 0)
         {
+            Debug.Log("hi");
             StartCoroutine(reloadFlame());
             return;
         }
@@ -77,7 +85,7 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        Debug.Log(currentFlameAmmo);
+        
     }
 
     private void HorizontalMovement()
@@ -154,12 +162,13 @@ public class PlayerController : MonoBehaviour
         gameManager.AddScore(20);
     }
 
-    private void TriggerFire()
+    private void TriggerFire() // add bigger if statement to track the cooldown so it stops triggering twice
     {
         if(Input.GetKey(KeyCode.E))
         { 
             if (Time.time >= nextTimeToFlame && canFlame )
             {
+                Debug.Log(currentFlameAmmo);
                 flameBreathPS.Play();
                 isFlaming = true;
                 currentFlameAmmo--;
@@ -178,10 +187,12 @@ public class PlayerController : MonoBehaviour
         isRealoading = true;
         isFlaming = false;
         canFlame = false;
+       
         yield return new WaitForSeconds(flameCooldown);
-        currentFlameAmmo = maxFlameAmmo;
+  
         canFlame = true;
         isRealoading = false;
+        currentFlameAmmo = maxFlameAmmo;
     }
 
 

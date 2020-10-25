@@ -8,18 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StartMenu.unity
     guid: af671f887561fb14cbda930ba73b962c
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/GameScenes/1.1.unity
+    guid: 40a4af5dce06f574abf48a101551d698
   - enabled: 1
     path: Assets/Scenes/GameScenes/1.2.unity
     guid: 2bf878eaf8e09ce44a9e12ac40e4b842
@@ -38,7 +29,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScenes/1.7.unity
     guid: 104df840aa3305441ab2c3fc2a1c66c9
-  - enabled: 0
-    path: Assets/Scenes/Level 1.unity
-    guid: a4b79222745ff1d41b81a655860e3372
   m_configObjects: {}

@@ -1,19 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class SceneDeterminer : MonoBehaviour
 {
-    private int currentBuildIndex = 0;
+    private int currentBuildIndex;
+    private GameManager gameManager;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void Start()
     {
-        var other = collision.gameObject.GetComponent<PlayerController>();
-        if(other != null)
+        gameManager = GameManager.Get();
+        currentBuildIndex = SceneManager.GetActiveScene().buildIndex;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.gameObject.CompareTag("Player"))
         {
-            currentBuildIndex += 1;
-            SceneManager.LoadScene(currentBuildIndex);
+            int nextIndex = currentBuildIndex + 1;
+            if (nextIndex < SceneManager.sceneCountInBuildSettings)
+                SceneManager.LoadScene(nextIndex);
+            else
+                gameManager.BackToStart();
         }
     }
 
