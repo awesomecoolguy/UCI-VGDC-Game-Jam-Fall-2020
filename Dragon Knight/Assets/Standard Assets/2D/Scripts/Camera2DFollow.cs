@@ -17,7 +17,7 @@ namespace UnityStandardAssets._2D
         private Vector3 m_LastTargetPosition;
         private Vector3 m_CurrentVelocity;
         private Vector3 m_LookAheadPos;
-        private int Offset_y = 3;
+        public int Offset_y = 3;
 
         // Use this for initialization
         private void Start()

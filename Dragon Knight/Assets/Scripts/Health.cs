@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Health : MonoBehaviour
 {
     public int maxHealth = 3;
-    protected int currentHealth;
+    public int currentHealth;
     public bool damageable = true;
     public List<AudioClip> damagedSounds;
 

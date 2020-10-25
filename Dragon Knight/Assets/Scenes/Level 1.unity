@@ -721,6 +721,7 @@ MonoBehaviour:
   lookAheadFactor: 3
   lookAheadReturnSpeed: 0.5
   lookAheadMoveThreshold: 0.1
+  Offset_y: 3
 --- !u!1001 &1771325840
 PrefabInstance:
   m_ObjectHideFlags: 0
