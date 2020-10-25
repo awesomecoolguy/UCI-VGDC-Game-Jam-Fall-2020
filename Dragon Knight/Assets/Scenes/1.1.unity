@@ -683,5 +683,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8945067438002581413, guid: d48014c710ac94b4e8e589827011cf28, type: 3}
+      propertyPath: flameTime
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8945067438002581413, guid: d48014c710ac94b4e8e589827011cf28, type: 3}
+      propertyPath: flameCooldown
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8945067438002581413, guid: d48014c710ac94b4e8e589827011cf28, type: 3}
+      propertyPath: maxFlameAmmo
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8945067438002581413, guid: d48014c710ac94b4e8e589827011cf28, type: 3}
+      propertyPath: flameRate
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d48014c710ac94b4e8e589827011cf28, type: 3}

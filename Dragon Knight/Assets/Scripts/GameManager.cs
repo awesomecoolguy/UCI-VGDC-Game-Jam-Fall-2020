@@ -100,7 +100,16 @@ public class GameManager : MonoBehaviour
     /// <param name="amount">Current flame gauge amount.</param>
     public void SetFlameGauge(int amount)
     {
-        gameUiInstance.SetHealth(amount);
+        gameUiInstance.SetFlameGauge(amount);
+    }
+
+    /// <summary>
+    /// Sets the flame gauge max in the UI.
+    /// </summary>
+    /// <param name="amount">Max flame gauge amount.</param>
+    public void SetFlameGaugeMax(int amount)
+    {
+        gameUiInstance.SetFlameGaugeMax(amount);
     }
 
     /// <summary>

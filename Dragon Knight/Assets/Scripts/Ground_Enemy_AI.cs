@@ -18,6 +18,7 @@ public class Ground_Enemy_AI : MonoBehaviour
     private Vector3 direction;
     private bool patrol = false;
     private EnemyHealth health;
+    public int enemy_current_health;
 
     // Start is called before the first frame update
     void Start()
@@ -28,12 +29,6 @@ public class Ground_Enemy_AI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (player attacks enemy)
-        //{
-            //health.Damage();
-            //taking damage animation
-            //taking damage sound
-        //}
         if (Vector3.Distance(player.transform.position, transform.position) <= Enemy_Awareness_Distance)
         {
             aware = true;
@@ -73,6 +68,10 @@ public class Ground_Enemy_AI : MonoBehaviour
             //patroling animation
             //patroling sound
         }
+        if(enemy_current_health <= 0)
+        {
+            health.OnDie();
+        }
     }
 
     void OnCollisionEnter2D(Collision2D hit)
@@ -83,7 +82,20 @@ public class Ground_Enemy_AI : MonoBehaviour
             speed = 0;
             //attack animation
             //attack sound
-            player.GetComponent<Health>().Damage();
+            StartCoroutine("Enemy_attacks_player");
         }
+        //if(hit.transform.gameObject.name == "flame")
+        //{
+        //enemy_current_health -= 1;
+        //health.OnHealthChanged(enemy_current_health);
+        //taking damage animation
+        //taking damage sound
+        //}
+    }
+
+        IEnumerator Enemy_attacks_player()
+    {
+        player.GetComponent<Health>().Damage();
+        yield return new WaitForSeconds(1);
     }
 }

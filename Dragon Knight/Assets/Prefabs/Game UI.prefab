@@ -580,6 +580,7 @@ MonoBehaviour:
   healthPointGap: 5
   scoreText: {fileID: 348493571081147269}
   scoreWidth: 6
+  flameGauge: {fileID: 7846430078477673174}
 --- !u!1 &8117498087390941305
 GameObject:
   m_ObjectHideFlags: 0

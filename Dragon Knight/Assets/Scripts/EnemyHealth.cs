@@ -5,7 +5,7 @@ public class EnemyHealth : Health
 {
     public Slider healthSlider;
 
-    public override void OnHealthChanged()
+    public void OnHealthChanged(int currentHealth)
     {
         healthSlider.value = currentHealth / maxHealth;
     }
