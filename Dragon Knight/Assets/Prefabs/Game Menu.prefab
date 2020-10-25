@@ -513,6 +513,7 @@ MonoBehaviour:
   continueButton: {fileID: 1317193236646982739}
   restartButton: {fileID: 214139756680184380}
   startMenuButton: {fileID: 7880055837832830645}
+  clickSound: {fileID: 8300000, guid: e6ae77ef8c447bc45a20f71e663f5b98, type: 3}
 --- !u!1 &4436753196580320216
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     private int lastScore;
     private GameUI gameUiInstance;
     private GameMenu gameMenuInstance;
+    private AudioSource audioSource;
 
     private void Awake()
     {
@@ -29,6 +30,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        // Get reference.
+        audioSource = GetComponent<AudioSource>();
+
         // Initialize level when the scene is changed.
         currentSceneName = SceneManager.GetActiveScene().name;
         SceneManager.activeSceneChanged += (Scene currentScene, Scene nextScene) =>
@@ -171,5 +175,14 @@ public class GameManager : MonoBehaviour
     public void BackToStart()
     {
         SceneManager.LoadScene(startMenuScene);
+    }
+
+    /// <summary>
+    /// Play an audio clip one time.
+    /// </summary>
+    /// <param name="clip">Clip to play.</param>
+    public void PlaySFX(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
     }
 }
