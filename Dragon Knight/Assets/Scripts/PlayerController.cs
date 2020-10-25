@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
 
 
     public float flameDamage;
-    public float flameCooldown;
+    private float flameCooldown = 5f;
     public float maxFlameAmmo;
     public float flameRate;
     

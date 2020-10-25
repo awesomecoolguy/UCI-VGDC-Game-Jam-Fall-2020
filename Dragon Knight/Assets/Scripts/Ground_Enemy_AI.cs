@@ -79,12 +79,9 @@ public class Ground_Enemy_AI : MonoBehaviour
             //attack sound
             StartCoroutine("Enemy_attacks_player");
         }
-        //if(hit.transform.gameObject.name == "flame")
+        //if(hit.transform.gameObject.name == "flame" || hit.transform.gameObject.name == "projectile")
         //{
-        //enemy_current_health -= 1;
-        //health.OnHealthChanged(enemy_current_health);
-        //taking damage animation
-        //taking damage sound
+        //StartCoroutine("Player_attacks_enemy");
         //}
     }
 
@@ -93,4 +90,12 @@ public class Ground_Enemy_AI : MonoBehaviour
         player.GetComponent<Health>().Damage();
         yield return new WaitForSeconds(1);
     }
+
+    //IEnumerator Player_attacks_enemy()
+    //{
+    //health.currentHealth -= 1;
+    //yield return new WaitForSeconds(1);
+    //taking damage animation
+    //taking damage sound
+    //}
 }
