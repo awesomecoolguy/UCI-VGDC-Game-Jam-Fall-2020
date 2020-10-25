@@ -58,21 +58,25 @@ public class Sky_Enemy_AI : MonoBehaviour
         {
             if (first_shot)
             {
+                Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), GetComponent<Collider2D>());
                 projectile.SetActive(true);
                 projectile.transform.position = transform.position;
-                projectile.GetComponent<Rigidbody2D>().AddForce(transform.forward * projectile_speed);
+                //attack sound
+                projectile.GetComponent<Rigidbody2D>().velocity = transform.forward * projectile_speed;
                 Reloaded = false;
+                StartCoroutine("Reloading");
                 first_shot = false;
             }
             if (Reloaded && !first_shot)
             {
+                Physics2D.IgnoreCollision(projectile.GetComponent<Collider2D>(), GetComponent<Collider2D>());
                 GameObject projectile_clone = Instantiate(projectile, transform.position, transform.rotation) as GameObject;
                 projectile_clone.GetComponent<Rigidbody2D>().velocity = transform.forward * projectile_speed;
                 //attack sound
                 Reloaded = false;
                 StartCoroutine("Reloading");
                 RaycastHit hit;
-                if (Physics.Raycast(transform.position, Vector3.forward, out hit, Mathf.Infinity))
+                if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity))
                 {
                     if (hit.point == player.transform.position)
                     {
@@ -82,7 +86,9 @@ public class Sky_Enemy_AI : MonoBehaviour
             }
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, transform.position.y), speed * Time.deltaTime);
             //move attack animation
-
+            var direction = player.transform.position - transform.position;
+            var angle = Mathf.Atan2(direction.y,direction.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
         if (!aware)
         {

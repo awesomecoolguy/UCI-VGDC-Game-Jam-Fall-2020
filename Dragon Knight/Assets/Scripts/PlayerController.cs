@@ -23,7 +23,20 @@ public class PlayerController : MonoBehaviour
     
     private bool canFlame;
     private float maxFlameAmmo = 10f;
-    private float currentFlameAmmo;
+    private float m_CurrentFlameAmmo;
+    private float currentFlameAmmo
+    {
+        get
+        {
+            return m_CurrentFlameAmmo;
+        }
+        set
+        {
+            m_CurrentFlameAmmo = value;
+            if (gameManager != null)
+                gameManager.SetFlameGauge((int)m_CurrentFlameAmmo);
+        }
+    }
     private float nextTimeToFlame = 0f;
     private float flameRate = 2f;
     private float flameCooldown = 10f;
@@ -43,6 +56,7 @@ public class PlayerController : MonoBehaviour
         playerCol = GetComponent<Collider2D>();
         Ground = FindObjectOfType<CompositeCollider2D>();
         gameManager = GameManager.Get();
+        gameManager.SetFlameGaugeMax((int)maxFlameAmmo);
         flameBreathPS = flameBreath.GetComponent<ParticleSystem>();
         currentFlameAmmo = maxFlameAmmo;
         canFlame = true;
@@ -63,7 +77,7 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        
+        Debug.Log(currentFlameAmmo);
     }
 
     private void HorizontalMovement()
@@ -144,7 +158,7 @@ public class PlayerController : MonoBehaviour
     {
         if(Input.GetKey(KeyCode.E))
         { 
-            if (onGround == false && Time.time >= nextTimeToFlame && canFlame )
+            if (Time.time >= nextTimeToFlame && canFlame )
             {
                 flameBreathPS.Play();
                 isFlaming = true;
@@ -155,9 +169,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             isFlaming = false;
-        
-            flameBreathPS.Pause();
-            flameBreathPS.Clear();
+            flameBreathPS.Stop();
         }
     }
 

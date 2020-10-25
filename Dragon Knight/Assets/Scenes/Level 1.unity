@@ -357,7 +357,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 200583062}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -844,11 +844,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 271227886}
   m_CullTransparentMesh: 0
---- !u!4 &331899806 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8945067438002581411, guid: d48014c710ac94b4e8e589827011cf28, type: 3}
-  m_PrefabInstance: {fileID: 562543470}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &332764588
 GameObject:
   m_ObjectHideFlags: 0
@@ -1277,7 +1272,6 @@ GameObject:
   - component: {fileID: 1147466052}
   - component: {fileID: 1147466051}
   - component: {fileID: 1147466050}
-  - component: {fileID: 1147466053}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1350,24 +1344,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1147466053
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1147466049}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d8238cc53530b64fbb7828c3d3bb591, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 331899806}
-  damping: 1
-  lookAheadFactor: 3
-  lookAheadReturnSpeed: 0.5
-  lookAheadMoveThreshold: 0.1
-  Offset_y: 3
 --- !u!1 &1158491625
 GameObject:
   m_ObjectHideFlags: 0
