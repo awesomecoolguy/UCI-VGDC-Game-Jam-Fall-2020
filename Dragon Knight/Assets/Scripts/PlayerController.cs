@@ -12,12 +12,17 @@ public class PlayerController : MonoBehaviour
 
     public float flameDamage;
     public float flameCooldown;
+    public float maxFlameAmmo;
+    public float flameRate;
+    
 
     private bool onGround = true;
     private int gemsCollected = 0;
+
     private bool isFlaming;
-    private float flameTimeLeft;
-    private float lastFlame = -100f;
+    private float currentFlameAmmo;
+    private bool canFlame;
+    private float nextTimeToFlame = 0f;
    
 
     //Cached references
@@ -34,6 +39,9 @@ public class PlayerController : MonoBehaviour
         playerCol = GetComponent<Collider2D>();
         Ground = FindObjectOfType<CompositeCollider2D>();
         gameManager = GameManager.Get();
+        currentFlameAmmo = maxFlameAmmo;
+        canFlame = true;
+        isFlaming = false;
     }
 
     void Update()
@@ -42,11 +50,17 @@ public class PlayerController : MonoBehaviour
         PlayerJump();
         DetermineOnGround();
         Flame();
+        if(currentFlameAmmo <= 0)
+        {
+            StartCoroutine(checkFlame());
+            return;
+        }
 
     }
 
     private void HorizontalMovement()
     {
+       
         if (Input.GetKey(KeyCode.D))
         {
             FlipPlayer(1);
@@ -100,39 +114,44 @@ public class PlayerController : MonoBehaviour
 
     private void Flame()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKey(KeyCode.P))
         {
-            if (Time.time >= (lastFlame - flameCooldown)) // checks if flame is off cooldown
+            if (canFlame && currentFlameAmmo > 0 && onGround == false && Time.time >= nextTimeToFlame)
             {
+                Debug.Log("Flame");
                 isFlaming = true;
-                lastFlame = Time.time;
-                checkFlame();
+                nextTimeToFlame = Time.time + 1f / flameRate;
+                currentFlameAmmo--;
             }
+
+            if(canFlame == false)
+            {
+                Debug.Log("No Flame");
+
+                
+            }
+
+      
+            
             
         }
+
 
     }
 
 
 
-    private void checkFlame()
+    IEnumerator checkFlame()
     {
-        if (isFlaming) 
-        {
-            if (flameTimeLeft > 0 && onGround == false)
-            {
-                // add a private bool that controls if u can jump
-            
-                flameTimeLeft -= Time.deltaTime;
-                // instantiate the image
-            }
-            if (flameTimeLeft <0)
-            {
-                // the player can jump
-                isFlaming = false;
-            }
-
-        }
+       
+            canFlame = false;
+            isFlaming = false;
+            Debug.Log("realoding");
+            yield return new WaitForSeconds(flameCooldown);
+            currentFlameAmmo = maxFlameAmmo;
+            canFlame = true;
+ 
+          
 
     }
 
