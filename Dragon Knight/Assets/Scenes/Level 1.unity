@@ -349,6 +349,7 @@ MonoBehaviour:
   projectile_speed: 20
   projectile: {fileID: 203480523}
   Reloading_time: 4
+  ground: {fileID: 1066177031}
 --- !u!50 &200583068
 Rigidbody2D:
   serializedVersion: 4
@@ -958,7 +959,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &361623332
 Transform:
   m_ObjectHideFlags: 0
@@ -1230,6 +1231,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 893241562}
   m_CullTransparentMesh: 0
+--- !u!1 &1066177031 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100004, guid: 57977547c59abb546bbb1501e3c417db, type: 3}
+  m_PrefabInstance: {fileID: 765645791}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1147466049
 GameObject:
   m_ObjectHideFlags: 0
