@@ -36,7 +36,7 @@ public class Ground_Enemy_AI : MonoBehaviour
         }
         if (aware)
         {
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, transform.position.y), speed * Time.deltaTime);
             //move attack animation
             //move attack sound
         }

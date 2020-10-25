@@ -9,22 +9,25 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float movementSpeed = 2f;
     [SerializeField] private float jumpVelocity = 4f;
 
+    [Header("FlameBreathParameters")]
+    [SerializeField] GameObject flameBreath;
+    [SerializeField] float flameEmmisionRate;
 
+    private ParticleSystem flameBreathPS;
     public float flameDamage;
-    private float flameCooldown = 5f;
-    public float maxFlameAmmo;
-    public float flameRate;
     
+    public bool isFlaming = false;
 
     private bool onGround = true;
     private int gemsCollected = 0;
-
-    private bool isFlaming;
-    private float currentFlameAmmo;
+    
     private bool canFlame;
+    private float maxFlameAmmo = 10f;
+    private float currentFlameAmmo;
     private float nextTimeToFlame = 0f;
-    private bool isReloading;
-   
+    private float flameRate = 2f;
+    private float flameCooldown = 10f;
+    private bool isRealoading = false;
 
     //Cached references
     Animator playerAnim;
@@ -40,15 +43,9 @@ public class PlayerController : MonoBehaviour
         playerCol = GetComponent<Collider2D>();
         Ground = FindObjectOfType<CompositeCollider2D>();
         gameManager = GameManager.Get();
+        flameBreathPS = flameBreath.GetComponent<ParticleSystem>();
         currentFlameAmmo = maxFlameAmmo;
-        gameManager.SetFlameGaugeMax((int)maxFlameAmmo);
-        gameManager.SetFlameGauge((int)currentFlameAmmo);
         canFlame = true;
-        isFlaming = false;
-    }
-    void OnEnable()
-    {
-        isReloading = false;
     }
 
     void Update()
@@ -56,15 +53,17 @@ public class PlayerController : MonoBehaviour
         HorizontalMovement();
         PlayerJump();
         DetermineOnGround();
-        Flame();
-        if (isReloading)
-            return;
-        if(currentFlameAmmo <= 0)
+        if (currentFlameAmmo <= 0)
         {
-            StartCoroutine(checkFlame());
+            StartCoroutine(reloadFlame());
             return;
         }
-
+        TriggerFire();
+        if (isRealoading)
+        {
+            return;
+        }
+        
     }
 
     private void HorizontalMovement()
@@ -74,32 +73,36 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.D))
             {
                 FlipPlayer(1);
-                playerRB.velocity = new Vector2(movementSpeed, 0f);
+                playerRB.velocity = new Vector2(movementSpeed, 0);
             }
             else if (Input.GetKey(KeyCode.A))
             {
                 FlipPlayer(-1);
-                playerRB.velocity = new Vector2(-movementSpeed, 0f);
+                playerRB.velocity = new Vector2(-movementSpeed, 0);
             }
+
             else
             {
                 playerRB.velocity = new Vector2(0f, 0);
             }
         }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            FlipPlayer(1);
-            playerRB.velocity = new Vector2(movementSpeed, playerRB.velocity.y);
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            FlipPlayer(-1);
-            playerRB.velocity = new Vector2(-movementSpeed, playerRB.velocity.y);
-        }
-
         else
         {
-            playerRB.velocity = new Vector2(0f, playerRB.velocity.y);
+            if (Input.GetKey(KeyCode.D))
+            {
+                FlipPlayer(1);
+                playerRB.velocity = new Vector2(movementSpeed, playerRB.velocity.y);
+            }
+            else if (Input.GetKey(KeyCode.A))
+            {
+                FlipPlayer(-1);
+                playerRB.velocity = new Vector2(-movementSpeed, playerRB.velocity.y);
+            }
+
+            else
+            {
+                playerRB.velocity = new Vector2(0f, playerRB.velocity.y);
+            }
         }
     }
 
@@ -137,51 +140,38 @@ public class PlayerController : MonoBehaviour
         gameManager.AddScore(20);
     }
 
-    private void Flame()
+    private void TriggerFire()
     {
-        if (Input.GetKey(KeyCode.P))
-        {
-            if (canFlame && currentFlameAmmo > 0 && onGround == false && Time.time >= nextTimeToFlame)
+        if(Input.GetKey(KeyCode.E))
+        { 
+            if (onGround == false && Time.time >= nextTimeToFlame && canFlame )
             {
-                Debug.Log("Flame");
+                flameBreathPS.Play();
                 isFlaming = true;
-                nextTimeToFlame = Time.time + 1f / flameRate;
                 currentFlameAmmo--;
-                gameManager.SetFlameGauge((int)currentFlameAmmo);
-            }
-
-            if(canFlame == false)
-            {
-                Debug.Log("No Flame");
-
-                
-            }   
-            
+                nextTimeToFlame = Time.time + 1f / flameRate;
+            }  
         }
         else
         {
             isFlaming = false;
+        
+            flameBreathPS.Pause();
+            flameBreathPS.Clear();
         }
-
-
     }
 
-
-
-    IEnumerator checkFlame()
+    IEnumerator reloadFlame()
     {
-        isReloading = true;
-        canFlame = false;
+        isRealoading = true;
         isFlaming = false;
-        Debug.Log("realoding");
+        canFlame = false;
         yield return new WaitForSeconds(flameCooldown);
         currentFlameAmmo = maxFlameAmmo;
-        gameManager.SetFlameGauge((int)currentFlameAmmo);
         canFlame = true;
-        isReloading = false;
- 
-          
-
+        isRealoading = false;
     }
+
+
 
 }

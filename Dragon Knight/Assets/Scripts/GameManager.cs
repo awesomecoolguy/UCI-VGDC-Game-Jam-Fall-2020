@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public string startMenuScene;
     public GameObject gameUI;
     public GameObject gameMenu;
+    public AudioClip gameMenuSound;
 
     private string currentSceneName;
     private int score = 0;
@@ -137,6 +138,8 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ToggleGameMenu()
     {
+        PlaySFX(gameMenuSound);
+        
         // If game menu is opened already, destroy and resume game.
         if (gameMenuInstance != null)
         {
