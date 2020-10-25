@@ -75,4 +75,13 @@ public class GameUI : MonoBehaviour
     {
         flameGauge.value = newAmount;
     }
+
+    /// <summary>
+    /// Sets the flame gauge max in the UI.
+    /// </summary>
+    /// <param name="newAmount">New flame gauge max amount.</param>
+    public void SetFlameGaugeMax(int newAmount)
+    {
+        flameGauge.maxValue = newAmount;
+    }
 }

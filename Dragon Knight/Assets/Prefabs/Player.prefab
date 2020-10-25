@@ -102,7 +102,9 @@ MonoBehaviour:
   movementSpeed: 3
   jumpVelocity: 7
   flameDamage: 0
-  flameCooldown: 0
+  flameCooldown: 7
+  maxFlameAmmo: 10
+  flameRate: 1
 --- !u!114 &7041641184913533084
 MonoBehaviour:
   m_ObjectHideFlags: 0

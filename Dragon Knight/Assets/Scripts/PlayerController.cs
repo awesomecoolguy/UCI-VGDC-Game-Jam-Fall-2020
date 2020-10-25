@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private float currentFlameAmmo;
     private bool canFlame;
     private float nextTimeToFlame = 0f;
+    private bool isReloading;
    
 
     //Cached references
@@ -40,8 +41,14 @@ public class PlayerController : MonoBehaviour
         Ground = FindObjectOfType<CompositeCollider2D>();
         gameManager = GameManager.Get();
         currentFlameAmmo = maxFlameAmmo;
+        gameManager.SetFlameGaugeMax((int)maxFlameAmmo);
+        gameManager.SetFlameGauge((int)currentFlameAmmo);
         canFlame = true;
         isFlaming = false;
+    }
+    void OnEnable()
+    {
+        isReloading = false;
     }
 
     void Update()
@@ -50,6 +57,8 @@ public class PlayerController : MonoBehaviour
         PlayerJump();
         DetermineOnGround();
         Flame();
+        if (isReloading)
+            return;
         if(currentFlameAmmo <= 0)
         {
             StartCoroutine(checkFlame());
@@ -161,14 +170,15 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator checkFlame()
     {
-       
-            canFlame = false;
-            isFlaming = false;
-            Debug.Log("realoding");
-            yield return new WaitForSeconds(flameCooldown);
-            currentFlameAmmo = maxFlameAmmo;
-            gameManager.SetFlameGauge((int)currentFlameAmmo);
-            canFlame = true;
+        isReloading = true;
+        canFlame = false;
+        isFlaming = false;
+        Debug.Log("realoding");
+        yield return new WaitForSeconds(flameCooldown);
+        currentFlameAmmo = maxFlameAmmo;
+        gameManager.SetFlameGauge((int)currentFlameAmmo);
+        canFlame = true;
+        isReloading = false;
  
           
 
