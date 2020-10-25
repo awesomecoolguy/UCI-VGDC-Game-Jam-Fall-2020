@@ -9,8 +9,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float movementSpeed = 2f;
     [SerializeField] private float jumpVelocity = 4f;
 
+
+    public float flameDamage;
+    public float flameCooldown;
+
     private bool onGround = true;
     private int gemsCollected = 0;
+    private bool isFlaming;
+    private float flameTimeLeft;
+    private float lastFlame = -100f;
+   
 
     //Cached references
     Animator playerAnim;
@@ -33,6 +41,8 @@ public class PlayerController : MonoBehaviour
         HorizontalMovement();
         PlayerJump();
         DetermineOnGround();
+        Flame();
+
     }
 
     private void HorizontalMovement()
@@ -87,4 +97,43 @@ public class PlayerController : MonoBehaviour
         gemsCollected += 1;
         gameManager.AddScore(20);
     }
+
+    private void Flame()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (Time.time >= (lastFlame - flameCooldown)) // checks if flame is off cooldown
+            {
+                isFlaming = true;
+                lastFlame = Time.time;
+                checkFlame();
+            }
+            
+        }
+
+    }
+
+
+
+    private void checkFlame()
+    {
+        if (isFlaming) 
+        {
+            if (flameTimeLeft > 0 && onGround == false)
+            {
+                // add a private bool that controls if u can jump
+            
+                flameTimeLeft -= Time.deltaTime;
+                // instantiate the image
+            }
+            if (flameTimeLeft <0)
+            {
+                // the player can jump
+                isFlaming = false;
+            }
+
+        }
+
+    }
+
 }
