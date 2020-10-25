@@ -31,10 +31,14 @@ public class Sky_Enemy_AI : MonoBehaviour
     //private bool first_shot = true;
     private GameObject projectile_clone;
     public GameObject ground;
+    public ParticleSystem part;
+    public List<ParticleCollisionEvent> events;
 
     // Start is called before the first frame update
     void Start()
     {
+        part = GetComponent<ParticleSystem>();
+        events = new List<ParticleCollisionEvent>();
         health = GetComponent<EnemyHealth>();
         audio = GetComponent<AudioSource>();
     }
@@ -77,6 +81,7 @@ public class Sky_Enemy_AI : MonoBehaviour
                 Reloaded = false;
                 StartCoroutine("Reloading");
                 //first_shot = false;
+                //attack animation
                 RaycastHit2D hit = Physics2D.Raycast(transform.position, new Vector2(direction.x, direction.y), Mathf.Infinity);
                 foreach(Collider2D collider in player.GetComponents<Collider2D>())
                 {
@@ -160,12 +165,30 @@ public class Sky_Enemy_AI : MonoBehaviour
         Reloaded = true;
     }
 
-    //IEnumerator Player_attacks_enemy()
-    //{
-    //health.currentHealth -= 1;
-    //yield return new WaitForSeconds(1);
-    //taking damage animation
-    //taking damage sound
-    //}
+    IEnumerator Player_attacks_enemy()
+    {
+        health.currentHealth -= 1;
+        yield return new WaitForSeconds(1);
+        //taking damage animation
+        //taking damage sound
+    }
+
+    void OnParticleCollision(GameObject other)
+    {
+        int numEvents = part.GetCollisionEvents(other, events);
+        Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
+        int i = 0;
+        while (i < numEvents)
+        {
+            if (rb)
+            {
+                if (other.gameObject.name == "Raven")
+                {
+                    StartCoroutine("Player_attacks_enemy");
+                }
+            }
+            i++;
+        }
+    }
 }
 

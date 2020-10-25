@@ -48,6 +48,8 @@ MonoBehaviour:
   gameUI: {fileID: 6678607251823689276, guid: 419ed5a09a904674eb197701467ce65d, type: 3}
   gameMenu: {fileID: 3990482326589025106, guid: 7114f94ad34dd394aa4068eb3082386a, type: 3}
   gameMenuSound: {fileID: 8300000, guid: 4a49644bc3cee9c4fa50836b83531ac3, type: 3}
+  startBGM: {fileID: 8300000, guid: 7c12bca71191e404bb9e9e48d1534925, type: 3}
+  gameBGM: {fileID: 8300000, guid: b3e9f3264c535624a86755228e804eee, type: 3}
 --- !u!82 &8822369858491427298
 AudioSource:
   m_ObjectHideFlags: 0
@@ -62,7 +64,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

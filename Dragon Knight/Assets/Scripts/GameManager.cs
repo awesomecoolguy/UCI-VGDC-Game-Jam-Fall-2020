@@ -8,7 +8,11 @@ public class GameManager : MonoBehaviour
     public string startMenuScene;
     public GameObject gameUI;
     public GameObject gameMenu;
+
+    [Header("SFX & BGM")]
     public AudioClip gameMenuSound;
+    public AudioClip startBGM;
+    public AudioClip gameBGM;
 
     private string currentSceneName;
     private int score = 0;
@@ -63,12 +67,17 @@ public class GameManager : MonoBehaviour
         // Don't create UI on start menu scene.
         if (currentSceneName == startMenuScene)
         {
+            PlayBGM(startBGM);
             score = 0;
             return;
         }
 
         // Save last score.
         lastScore = score;
+
+        // Play BGM.
+        if (audioSource.clip != gameBGM)
+            PlayBGM(gameBGM);
 
         // Clone Game UI prefab.
         GameObject uiObject = Instantiate(gameUI);
@@ -187,5 +196,15 @@ public class GameManager : MonoBehaviour
     public void PlaySFX(AudioClip clip)
     {
         audioSource.PlayOneShot(clip);
+    }
+
+    /// <summary>
+    /// Play an audio clip for BGM.
+    /// </summary>
+    /// <param name="clip">Clip to play.</param>
+    public void PlayBGM(AudioClip clip)
+    {
+        audioSource.clip = clip;
+        audioSource.Play();
     }
 }

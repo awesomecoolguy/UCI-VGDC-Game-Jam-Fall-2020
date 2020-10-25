@@ -18,11 +18,17 @@ public class Ground_Enemy_AI : MonoBehaviour
     private Vector3 direction;
     private bool patrol = false;
     private EnemyHealth health;
+    public ParticleSystem part;
+    public List<ParticleCollisionEvent> events;
+    public Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
+        part = GetComponent<ParticleSystem>();
+        events = new List<ParticleCollisionEvent>();
         health = GetComponent<EnemyHealth>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -37,6 +43,7 @@ public class Ground_Enemy_AI : MonoBehaviour
         if (aware)
         {
             transform.position = Vector2.MoveTowards(transform.position, new Vector2(player.transform.position.x, transform.position.y), speed * Time.deltaTime);
+            anim.SetBool("isWalking", true);
             //move attack animation
             //move attack sound
         }
@@ -64,6 +71,7 @@ public class Ground_Enemy_AI : MonoBehaviour
                 direction = Vector3.right;
             }
             transform.Translate(direction * speed * Time.deltaTime);
+            anim.SetBool("isWalking",true);
             //patroling animation
             //patroling sound
         }
@@ -79,10 +87,6 @@ public class Ground_Enemy_AI : MonoBehaviour
             //attack sound
             StartCoroutine("Enemy_attacks_player");
         }
-        //if(hit.transform.gameObject.name == "flame" || hit.transform.gameObject.name == "projectile")
-        //{
-        //StartCoroutine("Player_attacks_enemy");
-        //}
     }
 
     IEnumerator Enemy_attacks_player()
@@ -91,11 +95,29 @@ public class Ground_Enemy_AI : MonoBehaviour
         yield return new WaitForSeconds(1);
     }
 
-    //IEnumerator Player_attacks_enemy()
-    //{
-    //health.currentHealth -= 1;
-    //yield return new WaitForSeconds(1);
-    //taking damage animation
-    //taking damage sound
-    //}
+    IEnumerator Player_attacks_enemy()
+    {
+        health.currentHealth -= 1;
+        yield return new WaitForSeconds(1);
+        //taking damage animation
+        //taking damage sound
+    }
+
+    void OnParticleCollision(GameObject other)
+    {
+        int numEvents = part.GetCollisionEvents(other, events);
+        Rigidbody2D rb = other.GetComponent<Rigidbody2D>();
+        int i = 0;
+        while (i < numEvents)
+        {
+            if (rb)
+            {
+                if (other.gameObject.name == "Orc")
+                {
+                    StartCoroutine("Player_attacks_enemy");
+                }
+            }
+            i++;
+        }
+    }
 }

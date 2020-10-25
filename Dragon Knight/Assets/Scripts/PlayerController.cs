@@ -129,8 +129,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void FlipPlayer(int desiredScale)
+    private void FlipPlayer(int flipScale)
     {
+        float desiredScale = Mathf.Abs(transform.localScale.x) * flipScale;
         if (transform.localScale.x != desiredScale)
         {
             transform.localScale = new Vector2(desiredScale, transform.localScale.y);
@@ -142,7 +143,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && onGround == true)
 
         {
-            Debug.Log("hi");
             playerRB.velocity += new Vector2(0f, jumpVelocity);
         }
     }
@@ -167,16 +167,15 @@ public class PlayerController : MonoBehaviour
 
     private void TriggerFire() // add bigger if statement to track the cooldown so it stops triggering twice
     {
-        if(Input.GetKey(KeyCode.E))
-        { 
-            if (Time.time >= nextTimeToFlame && canFlame )
+        if(Input.GetKey(KeyCode.Mouse0))
+        {
+            if (Time.time >= nextTimeToFlame && canFlame)
             {
-                Debug.Log(currentFlameAmmo);
                 flameBreathPS.Play();
                 isFlaming = true;
                 currentFlameAmmo--;
                 nextTimeToFlame = Time.time + 1f / flameRate;
-            }  
+            }
         }
         else
         {
