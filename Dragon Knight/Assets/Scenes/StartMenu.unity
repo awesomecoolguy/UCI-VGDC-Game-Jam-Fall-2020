@@ -355,7 +355,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a34701aae46e1b749b11e31126f93f93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startScene: SampleScene
+  startScene: 1.1
   startButton: {fileID: 53432690}
 --- !u!1001 &1042022227
 PrefabInstance:

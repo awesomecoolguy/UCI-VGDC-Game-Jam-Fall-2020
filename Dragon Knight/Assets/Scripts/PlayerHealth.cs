@@ -40,6 +40,7 @@ public class PlayerHealth : Health
 
     public override void OnDamaged()
     {
+        base.OnDamaged();
         StartCoroutine(BecomeInvulnerable());
     }
 

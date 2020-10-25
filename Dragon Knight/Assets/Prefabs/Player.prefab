@@ -101,6 +101,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 3
   jumpVelocity: 7
+  flameDamage: 0
+  flameCooldown: 0
 --- !u!114 &7041641184913533084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,6 +116,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
+  damageable: 1
+  damagedSounds:
+  - {fileID: 8300000, guid: 7952b925b4908764ca7241e238345c60, type: 3}
+  - {fileID: 8300000, guid: 0915d00b14ea55d45acc31098f9e5f0b, type: 3}
+  - {fileID: 8300000, guid: f7f086967333c20478bd0cf9ec1b36de, type: 3}
+  invulnerabilityDuration: 1
+  invulnerabilityBlink: 0.1
 --- !u!50 &8945067438002581422
 Rigidbody2D:
   serializedVersion: 4

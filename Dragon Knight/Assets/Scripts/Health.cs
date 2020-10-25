@@ -1,10 +1,15 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class Health : MonoBehaviour
 {
     public int maxHealth = 3;
     protected int currentHealth;
     public bool damageable = true;
+    public List<AudioClip> damagedSounds;
+
+    private System.Random rng = new System.Random();
 
     private void Awake()
     {
@@ -44,7 +49,14 @@ public abstract class Health : MonoBehaviour
     /// <summary>
     /// Triggers when the target is damaged.
     /// </summary>
-    public virtual void OnDamaged() {}
+    public virtual void OnDamaged()
+    {
+        if (damagedSounds.Count > 0)
+        {
+            int index = rng.Next(0, damagedSounds.Count);
+            AudioSource.PlayClipAtPoint(damagedSounds[index], transform.position);
+        }
+    }
 
     /// <summary>
     /// Triggers when the health amount changes.

@@ -7,12 +7,13 @@ public class GameManager : MonoBehaviour
 
     public string startMenuScene;
     public GameObject gameUI;
-    public GameObject gameOverMenu;
+    public GameObject gameMenu;
 
     private string currentSceneName;
     private int score = 0;
     private int lastScore;
     private GameUI gameUiInstance;
+    private GameMenu gameMenuInstance;
 
     private void Awake()
     {
@@ -36,6 +37,12 @@ public class GameManager : MonoBehaviour
             InitializeLevel();
         };
         InitializeLevel();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && currentSceneName != startMenuScene)
+            ToggleGameMenu();
     }
 
     /// <summary>
@@ -88,6 +95,41 @@ public class GameManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Pauses the game.
+    /// </summary>
+    public void PauseGame()
+    {
+        Time.timeScale = 0;
+    }
+
+    /// <summary>
+    /// Resumes the game.
+    /// </summary>
+    public void ResumeGame()
+    {
+        Time.timeScale = 1;
+    }
+
+    /// <summary>
+    /// Toggles game menu.
+    /// </summary>
+    public void ToggleGameMenu()
+    {
+        // If game menu is opened already, destroy and resume game.
+        if (gameMenuInstance != null)
+        {
+            Destroy(gameMenuInstance.gameObject);
+            ResumeGame();
+            return;
+        }
+
+        // Otherwise, pause and create game menu.
+        PauseGame();
+        GameObject gameMenuObject = Instantiate(gameMenu);
+        gameMenuInstance = gameMenuObject.GetComponent<GameMenu>();
+    }
+
+    /// <summary>
     /// Triggers that the game is over.
     /// </summary>
     public void GameOver()
@@ -103,5 +145,13 @@ public class GameManager : MonoBehaviour
     public void GameEnding()
     {
         score = 0;
+    }
+
+    /// <summary>
+    /// Returns player to the start menu.
+    /// </summary>
+    public void BackToStart()
+    {
+        SceneManager.LoadScene(startMenuScene);
     }
 }
