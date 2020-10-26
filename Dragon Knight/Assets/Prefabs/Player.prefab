@@ -294,9 +294,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53098b538916a1e4dafb906697243180, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
   movementSpeed: 3
   jumpVelocity: 5
   flameBreath: {fileID: 0}
+=======
+  movementAccel: 0.1
+  movementSpeed: 7
+  jumpVelocity: 8
+  groundFriction: 0.99
+  flameBreath: {fileID: 7322535619441494592}
+>>>>>>> Stashed changes
   flameEmmisionRate: 0
   flameDamage: 0
   isFlaming: 0

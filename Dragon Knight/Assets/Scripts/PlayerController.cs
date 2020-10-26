@@ -7,8 +7,10 @@ public class PlayerController : MonoBehaviour
 {
     //Configuration Parameters
     [Header("Movement Parameters")]
-    [SerializeField] private float movementSpeed = 2f;
+    [SerializeField] private float movementAccel = .1f;
+    [SerializeField] private float movementSpeed = 7f;
     [SerializeField] private float jumpVelocity = 4f;
+    [SerializeField] private float groundFriction = 0.99f;
 
     [Header("FlameBreathParameters")]
     [SerializeField] GameObject flameBreath;
@@ -91,37 +93,42 @@ public class PlayerController : MonoBehaviour
 
     private void HorizontalMovement()
     {
-        if (isFlaming)
+        if (Input.GetKey(KeyCode.D))
         {
-            if (Input.GetKey(KeyCode.D))
+            float newVelX = playerRB.velocity.x + movementAccel;
+            float newVelY = playerRB.velocity.y;
+            if (newVelX >= movementSpeed)
             {
-                FlipPlayer(1);
-                playerRB.velocity = new Vector2(movementSpeed, 0);
+                newVelX = movementSpeed;
             }
-            else if (Input.GetKey(KeyCode.A))
+            if (isFlaming)
             {
-                FlipPlayer(-1);
-                playerRB.velocity = new Vector2(-movementSpeed, 0);
+                newVelY = 0;
             }
-
-            else
+            playerRB.velocity = new Vector2(newVelX, newVelY);
+            FlipPlayer(1);
+        }
+        else if (Input.GetKey(KeyCode.A))
+        {
+            float newVelX = playerRB.velocity.x - movementAccel;
+            float newVelY = playerRB.velocity.y;
+            if (newVelX <= -movementSpeed)
             {
-                playerRB.velocity = new Vector2(0f, 0);
+                newVelX = -movementSpeed;
             }
+            if (isFlaming)
+            {
+                newVelY = 0;
+            }
+            playerRB.velocity = new Vector2(newVelX, newVelY);
+            FlipPlayer(-1);
         }
         else
         {
-            if (Input.GetKey(KeyCode.D))
+            if (Mathf.Abs(playerRB.velocity.x) > 0.01)
             {
-                FlipPlayer(1);
-                playerRB.velocity = new Vector2(movementSpeed, playerRB.velocity.y);
+                playerRB.velocity = new Vector2(playerRB.velocity.x * groundFriction, playerRB.velocity.y);
             }
-            else if (Input.GetKey(KeyCode.A))
-            {
-                FlipPlayer(-1);
-                playerRB.velocity = new Vector2(-movementSpeed, playerRB.velocity.y);
-            }
-
             else
             {
                 playerRB.velocity = new Vector2(0f, playerRB.velocity.y);
@@ -129,7 +136,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+<<<<<<< Updated upstream
     private void FlipPlayer(int flipScale)
+=======
+
+    private void FlipPlayer(int desiredScale)
+>>>>>>> Stashed changes
     {
         float desiredScale = Mathf.Abs(transform.localScale.x) * flipScale;
         if (transform.localScale.x != desiredScale)
