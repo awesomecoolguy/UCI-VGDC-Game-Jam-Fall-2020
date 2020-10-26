@@ -21,6 +21,7 @@ public class Bouncing_Enemy_AI : MonoBehaviour
     public GameObject ground;
     public ParticleSystem part;
     public List<ParticleCollisionEvent> events;
+    public Animator anim;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +29,7 @@ public class Bouncing_Enemy_AI : MonoBehaviour
         part = GetComponent<ParticleSystem>();
         events = new List<ParticleCollisionEvent>();
         health = GetComponent<EnemyHealth>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -36,6 +38,7 @@ public class Bouncing_Enemy_AI : MonoBehaviour
         if (bounce)
         {
             GetComponent<Rigidbody2D>().velocity += new Vector2(0f, jump_speed);
+            anim.SetBool("isFlying", true);
         }
         if (GetComponent<Collider2D>().IsTouching(ground.GetComponentInChildren<Collider2D>()))
         {

@@ -761,7 +761,7 @@ Animator:
   m_GameObject: {fileID: 6311921838463701377}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 22265337272dafb44b1db97c3e2b6676, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8f2ff67b938a20a4fada9831c2101e3a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -779,7 +779,7 @@ Rigidbody2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6311921838463701377}
   m_BodyType: 1
-  m_Simulated: 0
+  m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
@@ -837,7 +837,7 @@ Animation:
   m_GameObject: {fileID: 6311921838463701377}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 8b5fdc51ea8abf74fa6750cd90acdc7e, type: 2}
+  m_Animation: {fileID: 7400000, guid: 49227a2a150bfad43afa47d073deee67, type: 2}
   m_Animations: []
   m_WrapMode: 0
   m_PlayAutomatically: 1

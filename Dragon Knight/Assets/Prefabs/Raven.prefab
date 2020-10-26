@@ -18,9 +18,10 @@ GameObject:
   - component: {fileID: 2367374370116198294}
   - component: {fileID: -3455055124588164603}
   - component: {fileID: 4940924428611403654}
+  - component: {fileID: -7829334225890941993}
   m_Layer: 0
   m_Name: Raven
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -408,6 +409,21 @@ MonoBehaviour:
   damageable: 1
   damagedSounds: []
   healthSlider: {fileID: 7914603746851087011}
+--- !u!111 &-7829334225890941993
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 11164766150369301}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &3988780360766940886
 GameObject:
   m_ObjectHideFlags: 0

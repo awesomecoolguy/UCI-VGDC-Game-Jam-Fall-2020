@@ -456,6 +456,7 @@ GameObject:
   - component: {fileID: 6790639646154305889}
   - component: {fileID: -3699369004653910700}
   - component: {fileID: 6993330914429993860}
+  - component: {fileID: 6712896315945231136}
   m_Layer: 0
   m_Name: Flying Orc
   m_TagString: Enemy
@@ -588,6 +589,7 @@ MonoBehaviour:
   jump_speed: 1.5
   ground: {fileID: 0}
   part: {fileID: 0}
+  anim: {fileID: 6993330914429993860}
 --- !u!95 &6993330914429993860
 Animator:
   serializedVersion: 3
@@ -598,7 +600,7 @@ Animator:
   m_GameObject: {fileID: 4055735708451634237}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 543c2868c9bdf234eb1a5bc9895e2941, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -607,6 +609,21 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!111 &6712896315945231136
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4055735708451634237}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 0f1cdff9e34b01246bd1f88944f79659, type: 2}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &4401403741347924997
 GameObject:
   m_ObjectHideFlags: 0

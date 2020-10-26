@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour
     Animator playerAnim;
     Rigidbody2D playerRB;
     Collider2D playerCol;
-    Collider2D Ground;
     GameManager gameManager;
 
     void Start()
@@ -58,7 +57,6 @@ public class PlayerController : MonoBehaviour
         playerAnim = GetComponent<Animator>();
         playerRB = GetComponent<Rigidbody2D>();
         playerCol = GetComponent<Collider2D>();
-        Ground = FindObjectOfType<TilemapCollider2D>();
         gameManager = GameManager.Get();
         gameManager.SetFlameGaugeMax((int)maxFlameAmmo);
         flameBreathPS = flameBreath.GetComponent<ParticleSystem>();
@@ -76,7 +74,6 @@ public class PlayerController : MonoBehaviour
     {
         HorizontalMovement();
         PlayerJump();
-        DetermineOnGround();
         if (currentFlameAmmo <= 0)
         {
             
@@ -95,6 +92,10 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.D))
         {
+<<<<<<< Updated upstream
+=======
+            playerAnim.SetBool("isWalking", true);
+>>>>>>> Stashed changes
             float newVelX = playerRB.velocity.x + movementAccel;
             float newVelY = playerRB.velocity.y;
             if (newVelX >= movementSpeed)
@@ -110,6 +111,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.A))
         {
+<<<<<<< Updated upstream
             float newVelX = playerRB.velocity.x - movementAccel;
             float newVelY = playerRB.velocity.y;
             if (newVelX <= -movementSpeed)
@@ -120,11 +122,28 @@ public class PlayerController : MonoBehaviour
             {
                 newVelY = 0;
             }
+=======
+            playerAnim.SetBool("isWalking", true);
+            float newVelX = playerRB.velocity.x - movementAccel;
+            float newVelY = playerRB.velocity.y;
+            if (newVelX <= -movementSpeed)
+            {
+                newVelX = -movementSpeed;
+            }
+            if (isFlaming)
+            {
+                newVelY = 0;
+            }
+>>>>>>> Stashed changes
             playerRB.velocity = new Vector2(newVelX, newVelY);
             FlipPlayer(-1);
         }
         else
         {
+<<<<<<< Updated upstream
+=======
+            playerAnim.SetBool("isWalking", false);
+>>>>>>> Stashed changes
             if (Mathf.Abs(playerRB.velocity.x) > 0.01)
             {
                 playerRB.velocity = new Vector2(playerRB.velocity.x * groundFriction, playerRB.velocity.y);
@@ -159,18 +178,21 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void DetermineOnGround()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(playerCol.IsTouching(Ground))
+        if(collision.gameObject.tag == "Ground")
         {
             onGround = true;
         }
-        else
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Ground")
         {
             onGround = false;
         }
     }
-
     public void AddGemCollected()
     {
         gemsCollected += 1;
